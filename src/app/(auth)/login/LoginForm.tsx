@@ -1,8 +1,20 @@
-import { Card, CardHeader, CardBody, CardFooter, Button } from '@nextui-org/react';
+'use client';
+
+import { Button, Card, CardBody, CardHeader, Input } from '@nextui-org/react';
 import { GiPadlock } from 'react-icons/gi';
-import { Input } from '@nextui-org/react';
+import { useForm } from 'react-hook-form';
 
 const LoginForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm();
+
+  const onSubmit = (data: any) => {
+    console.log(data);
+  };
+
   return (
     <Card className='w-2/5 mx-auto'>
       <CardHeader className='flex flex-col items-center justify-center'>
@@ -15,11 +27,25 @@ const LoginForm = () => {
         </div>
       </CardHeader>
       <CardBody>
-        <form action=''>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className={'space-y-4'}>
-            <Input label={'Email'} variant={'bordered'} />
-            <Input label={'Password'} variant={'bordered'} />
-            <Button fullWidth color={'secondary'} type={'submit'}>
+            <Input
+              defaultValue={''}
+              label={'Email'}
+              variant={'bordered'}
+              {...register('email', { required: 'Email is required' })}
+              isInvalid={!!errors.email}
+              errorMessage={errors.email?.message as string}
+            />
+            <Input
+              defaultValue={''}
+              label={'Password'}
+              variant={'bordered'}
+              type={'password'}
+              {...register('password', { required: 'Password is required' })}
+              errorMessage={errors.password?.message as string}
+            />
+            <Button isDisabled={!isValid} fullWidth color={'secondary'} type={'submit'}>
               Login
             </Button>
           </div>
