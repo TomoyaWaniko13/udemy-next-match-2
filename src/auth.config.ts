@@ -17,8 +17,10 @@ export default {
 
           const user = await getUserByEmail(email);
 
+          // if user doesn't exist or password isn't correct
           if (!user || !(await compare(password, user.passwordHash))) return null;
 
+          // if user exists and password is correct
           return user;
         }
 
