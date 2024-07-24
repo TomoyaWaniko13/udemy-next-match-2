@@ -3,7 +3,7 @@
 import { Session } from 'next-auth';
 import { Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from '@nextui-org/react';
 import Link from 'next/link';
-import { signOut } from '@/auth';
+import { signOutUser } from '@/app/actions/authActions';
 
 type Props = {
   user: Session['user'];
@@ -14,7 +14,6 @@ const UserMenu = ({ user }: Props) => {
     <Dropdown placement={'bottom-end'}>
       <DropdownTrigger>
         <Avatar
-          isBordered={true}
           as={'button'}
           className={'transition-transform'}
           color={'secondary'}
@@ -32,7 +31,7 @@ const UserMenu = ({ user }: Props) => {
         <DropdownItem as={Link} href={'/members/edit'}>
           Edit profile
         </DropdownItem>
-        <DropdownItem color={'danger'} onClick={async () => signOut()}>
+        <DropdownItem color={'danger'} onClick={async () => signOutUser()}>
           Log out
         </DropdownItem>
       </DropdownMenu>
