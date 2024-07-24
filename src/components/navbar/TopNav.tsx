@@ -10,8 +10,11 @@ import {
 import Link from 'next/link';
 import { Button } from '@nextui-org/react';
 import NavLink from '@/components/navbar/NavLink';
+import { auth } from '@/auth';
+import UserMenu from '@/components/navbar/UserMenu';
 
-const TopNav = () => {
+const TopNav = async () => {
+  const session = await auth();
   return (
     <Navbar
       maxWidth={'xl'}
@@ -27,12 +30,18 @@ const TopNav = () => {
         <NavLink href={'/messages'} label={'Messages'} />
       </NavbarContent>
       <NavbarContent justify='end'>
-        <Button as={Link} href={'/login'} variant={'bordered'}>
-          Login
-        </Button>
-        <Button as={Link} href={'/register'} variant={'bordered'}>
-          Register
-        </Button>
+        {session?.user ? (
+          <UserMenu user={session.user} />
+        ) : (
+          <>
+            <Button as={Link} href={'/login'} variant={'bordered'}>
+              Login
+            </Button>
+            <Button as={Link} href={'/register'} variant={'bordered'}>
+              Register
+            </Button>
+          </>
+        )}
       </NavbarContent>
     </Navbar>
   );
