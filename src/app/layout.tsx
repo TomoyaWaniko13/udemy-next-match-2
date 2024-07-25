@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <TopNav />
-          {children}
+          <div className={'px-10'}>{children}</div>
         </Providers>
       </body>
     </html>
