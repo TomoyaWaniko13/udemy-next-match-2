@@ -54,7 +54,7 @@ model Member {
   description String
   city        String
   country     String
-  iamge       String?
+  image       String?
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   photos      Photo[]
 }
