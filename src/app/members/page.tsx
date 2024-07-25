@@ -1,4 +1,4 @@
-import { getMembers } from '@/app/actions/membersActions';
+import { getMembers } from '@/app/actions/memberActions';
 import { MemberCard } from '@/app/members/MemberCard';
 
 const MembersPage = async () => {
