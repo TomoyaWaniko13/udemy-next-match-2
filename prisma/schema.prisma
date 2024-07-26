@@ -57,6 +57,12 @@ model Member {
   image       String?
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   photos      Photo[]
+  // Memberモデルが「他のメンバーに対して送った「いいね」」
+  // Member modelが「いいね」を送ったメンバー
+  sourceLikes Like[]   @relation("source")
+  // Memberモデルが「他のメンバーから受け取った「いいね」」
+  // Member modelが「いいね」を受け取ったメンバー
+  targetLikes Like[]   @relation("target")
 }
 
 model Photo {
@@ -66,4 +72,14 @@ model Photo {
 
   memberId String
   member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+}
+
+model Like {
+  sourceUserId String
+  sourceMember Member @relation("source", fields: [sourceUserId], references: [userId], onDelete: Cascade)
+
+  targetUserId String
+  targetMember Member @relation("target", fields: [targetUserId], references: [userId], onDelete: Cascade)
+
+  @@id([sourceUserId, targetUserId])
 }
