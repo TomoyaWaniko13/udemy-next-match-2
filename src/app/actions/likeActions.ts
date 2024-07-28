@@ -9,13 +9,9 @@ export async function toggleLikeMember(targetUserId: string, isLiked: boolean) {
     const userId = await getAuthUserId();
 
     if (isLiked) {
-      await prisma.like.delete({
-        where: { sourceUserId_targetUserId: { sourceUserId: userId, targetUserId } },
-      });
+      await prisma.like.delete({ where: { sourceUserId_targetUserId: { sourceUserId: userId, targetUserId } } });
     } else {
-      await prisma.like.create({
-        data: { sourceUserId: userId, targetUserId },
-      });
+      await prisma.like.create({ data: { sourceUserId: userId, targetUserId } });
     }
   } catch (error) {
     console.log(error);
@@ -32,6 +28,11 @@ export async function fetchCurrentUserLikeIds() {
       select: { targetUserId: true },
     });
 
+    console.log(likeIds.map((like) => like.targetUserId));
+
     return likeIds.map((like) => like.targetUserId);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 }

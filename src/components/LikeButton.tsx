@@ -14,6 +14,7 @@ const LikeButton = ({ targetId, hasLiked }: Props) => {
 
   async function toggleLike() {
     await toggleLikeMember(targetId, hasLiked);
+    router.refresh();
   }
 
   return (

@@ -1,3 +1,5 @@
+'use client';
+
 import { Member } from '@prisma/client';
 import { Card, CardFooter, Image } from '@nextui-org/react';
 import Link from 'next/link';
@@ -6,9 +8,17 @@ import LikeButton from '@/components/LikeButton';
 
 type Props = {
   member: Member;
+  likeIds: string[];
 };
 
-export async function MemberCard({ member }: Props) {
+export async function MemberCard({ member, likeIds }: Props) {
+  const hasLiked = likeIds.includes(member.userId);
+
+  const preventLinkAction = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
   return (
     <Card fullWidth as={Link} href={`/members/${member.userId}`} isPressable={true}>
       <Image
@@ -18,8 +28,10 @@ export async function MemberCard({ member }: Props) {
         src={member.image || '/images/user.png'}
         className={'aspect-square object-over'}
       />
-      <div className={'absolute top-3 right-3 z-50'}>
-        <LikeButton targetId={member.userId} hasLiked={false} />
+      <div onClick={preventLinkAction}>
+        <div className={'absolute top-3 right-3 z-50'}>
+          <LikeButton targetId={member.userId} hasLiked={hasLiked} />
+        </div>
       </div>
       <CardFooter className={'flex justify-start bg-black overflow-hidden absolute bottom-0 z-10 bg-dark-gradient'}>
         <div className={'flex flex-col text-white'}>
