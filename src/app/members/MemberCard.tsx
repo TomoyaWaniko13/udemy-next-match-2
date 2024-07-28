@@ -1,5 +1,3 @@
-'use client';
-
 import { Member } from '@prisma/client';
 import { Card, CardFooter, Image } from '@nextui-org/react';
 import Link from 'next/link';
@@ -11,7 +9,7 @@ type Props = {
   likeIds: string[];
 };
 
-export async function MemberCard({ member, likeIds }: Props) {
+export function MemberCard({ member, likeIds }: Props) {
   const hasLiked = likeIds.includes(member.userId);
 
   const preventLinkAction = (e: React.MouseEvent) => {
