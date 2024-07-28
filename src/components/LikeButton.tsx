@@ -9,7 +9,7 @@ type Props = {
   hasLiked: boolean;
 };
 
-export default function LikeButton({ targetId, hasLiked }: Props) {
+const LikeButton = ({ targetId, hasLiked }: Props) => {
   const router = useRouter();
 
   async function toggleLike() {
@@ -22,4 +22,6 @@ export default function LikeButton({ targetId, hasLiked }: Props) {
       <AiFillHeart size={24} className={hasLiked ? 'fill-rose-500' : 'fill-neutral-500/70'} />
     </div>
   );
-}
+};
+
+export default LikeButton;
