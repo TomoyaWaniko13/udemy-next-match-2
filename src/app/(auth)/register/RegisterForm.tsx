@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { registerSchema, RegisterSchema } from '@/lib/schemas/registerSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { registerUser } from '@/app/actions/authActions';
+import { handleFormServerErrors } from '@/lib/util';
 
 const RegisterForm = () => {
   const {
@@ -14,7 +15,7 @@ const RegisterForm = () => {
     setError,
     formState: { errors, isValid, isSubmitting },
   } = useForm<RegisterSchema>({
-    // resolver: zodResolver(registerSchema),
+    resolver: zodResolver(registerSchema),
     mode: 'onTouched',
   });
 
@@ -24,14 +25,9 @@ const RegisterForm = () => {
     if (result.status === 'success') {
       console.log('User registered successfully');
     } else {
-      if (Array.isArray(result.error)) {
-        result.error.forEach((e) => {
-          const fieldName = e.path.join('.') as 'email' | 'name' | 'password';
-          setError(fieldName, { message: e.message });
-        });
-      } else {
-        setError('root.serverError', { message: result.error });
-      }
+      // setError は React Hook Form の useForm フックから取得した関数で、
+      // フォームの特定のフィールドにエラーを設定するために使用されます
+      handleFormServerErrors(result, setError);
     }
   };
 
