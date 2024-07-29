@@ -26,7 +26,7 @@ const RegisterForm = () => {
       console.log('User registered successfully');
     } else {
       // setError は React Hook Form の useForm フックから取得した関数で、
-      // フォームの特定のフィールドにエラーを設定するために使用されます
+      // フォームの特定のフィールドにエラーを設定するために使用される
       handleFormServerErrors(result, setError);
     }
   };
