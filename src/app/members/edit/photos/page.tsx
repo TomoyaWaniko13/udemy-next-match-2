@@ -3,6 +3,7 @@ import { getAuthUserId } from '@/app/actions/authActions';
 import { getMemberPhotosByUserId } from '@/app/actions/memberActions';
 import StartButton from '@/components/StartButton';
 import DeleteButton from '@/components/DeleteButton';
+import ImageUploadButton from '@/components/ImageUploadButton';
 
 const PhotosPage = async () => {
   const userId = await getAuthUserId();
@@ -13,6 +14,9 @@ const PhotosPage = async () => {
       <CardHeader className={'text-2xl font-semibold text-secondary'}>Edit profile</CardHeader>
       <Divider />
       <CardBody>
+        <div className={'pt-5 pl-5'}>
+          <ImageUploadButton />
+        </div>
         <div className={'grid grid-cols-5 gap-3 p-5'}>
           {photos &&
             photos.map((photo) => (
