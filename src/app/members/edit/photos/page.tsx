@@ -3,8 +3,8 @@ import { getAuthUserId } from '@/app/actions/authActions';
 import { getMemberPhotosByUserId } from '@/app/actions/memberActions';
 import StartButton from '@/components/StartButton';
 import DeleteButton from '@/components/DeleteButton';
-import ImageUploadButton from '@/components/ImageUploadButton';
 import MemberPhotoUpload from '@/app/members/edit/photos/MemberPhotoUpload';
+import MemberImage from '@/components/MemberImage';
 
 const PhotosPage = async () => {
   const userId = await getAuthUserId();
@@ -20,13 +20,7 @@ const PhotosPage = async () => {
           {photos &&
             photos.map((photo) => (
               <div key={photo.id} className={'relative w-[220px] h-[220px]'}>
-                <Image
-                  width={220}
-                  height={220}
-                  src={photo.url}
-                  alt={'Image'}
-                  className={'object-cover w-full h-full'}
-                />
+                <MemberImage photo={photo} />
                 <div className={'absolute top-3 left-3 z-50'}>
                   <StartButton selected={false} loading={false} />
                 </div>
